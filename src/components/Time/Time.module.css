@@ -1,0 +1,251 @@
+.plot {
+  background: #0a0a0a;
+  color: #fff;
+  padding: 100px 20px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Верхний градиент (как было) */
+.plot::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at 50% 20%,
+    /* центр сверху */ rgba(229, 9, 20, 0.08) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Нижний градиент — симметричный верхнему */
+.plot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at 50% 80%,
+    /* центр снизу (80% = симметрично 20% сверху) */ rgba(229, 9, 20, 0.08) 0%,
+    /* та же интенсивность красного */ transparent 70%
+      /* тот же радиус затухания */
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+.title {
+  font-family: "Russo One", sans-serif;
+  font-size: clamp(40px, 7vw, 70px);
+  color: #e50914;
+  margin-bottom: 70px;
+  letter-spacing: 4px;
+  text-shadow: 0 0 20px rgba(229, 9, 20, 0.4);
+}
+
+.timeline {
+  list-style: none;
+  padding: 0;
+  margin: 0 auto;
+  max-width: 800px;
+  position: relative;
+}
+
+.timeline::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 3px;
+  background: linear-gradient(to bottom, #e50914, #4a0000);
+  transform: translateX(-50%);
+  box-shadow: 0 0 15px rgba(229, 9, 20, 0.3);
+  z-index: 0;
+}
+
+.event {
+  font-family: "Montserrat", sans-serif;
+  font-size: clamp(18px, 4.2vw, 24px);
+  margin: 60px 0;
+  position: relative;
+  width: 45%;
+  text-align: right;
+  padding-right: 50px;
+  box-sizing: border-box;
+}
+
+.event:nth-child(even) {
+  margin-left: 55%;
+  text-align: left;
+  padding-right: 0;
+  padding-left: 50px;
+}
+
+.event::before {
+  content: "";
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  background: #e50914;
+  border-radius: 50%;
+  top: 28px;
+  right: -9px;
+  transform: translateY(-50%);
+  box-shadow: 0 0 15px #e50914;
+  z-index: 1;
+}
+
+.event:nth-child(even)::before {
+  left: -9px;
+  right: auto;
+}
+
+.episode {
+  display: inline-block;
+  font-family: "Russo One", sans-serif;
+  font-weight: 700;
+  color: #e50914;
+  font-size: clamp(20px, 4.8vw, 26px);
+  background: rgba(0, 0, 0, 0.6);
+  padding: 6px 14px;
+  border-radius: 10px;
+  margin-bottom: 8px;
+  letter-spacing: 2px;
+  box-shadow: 0 2px 10px rgba(229, 9, 20, 0.25);
+}
+
+.time {
+  font-weight: 800;
+  color: #ffffff;
+  font-size: clamp(22px, 5.5vw, 28px);
+  display: block;
+  margin-bottom: 6px;
+}
+
+.label {
+  color: #cccccc;
+  font-size: clamp(16px, 4vw, 20px);
+}
+
+/* ──────────────────────────────────────
+   Адаптация для планшетов
+─────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .plot {
+    padding: 80px 20px;
+  }
+
+  .title {
+    margin-bottom: 60px;
+  }
+
+  .timeline {
+    max-width: 650px;
+  }
+
+  .event {
+    margin: 50px 0;
+    padding-right: 45px;
+  }
+
+  .event:nth-child(even) {
+    padding-left: 45px;
+  }
+}
+
+/* ──────────────────────────────────────
+   Мобильные устройства — переходим в одну колонку
+─────────────────────────────────────── */
+@media (max-width: 768px) {
+  .plot {
+    padding: 60px 15px;
+  }
+
+  .title {
+    font-size: clamp(32px, 9vw, 48px);
+    margin-bottom: 50px;
+  }
+
+  .timeline {
+    max-width: 100%;
+    padding-left: 0; /* убираем любые лишние отступы */
+  }
+
+  .timeline::before {
+    left: 26px; /* фиксированное положение слева — подбирай под свой вкус (24–30px) */
+    transform: none;
+    width: 3px; /* можно оставить 3px или сделать 2px */
+  }
+
+  .event {
+    width: 100%;
+    max-width: none;
+    margin: 50px 0;
+    padding-left: 66px; /* = left полоски + диаметр точки + отступ до текста (26 + 18 + 22) */
+    padding-right: 15px;
+    text-align: left;
+    box-sizing: border-box;
+  }
+
+  .event:nth-child(even) {
+    margin-left: 0;
+    padding-left: 66px; /* одинаковый отступ для всех событий */
+    padding-right: 15px;
+  }
+
+  .event::before {
+    left: 17px !important; /* центр точки относительно полоски: left полоски + (ширина полоски/2) - (диаметр точки/2) */
+    right: auto;
+    width: 18px;
+    height: 18px;
+    top: 50%; /* точнее по вертикали */
+    transform: translateY(-50%);
+  }
+
+  .episode,
+  .time,
+  .label {
+    text-align: left; /* принудительно слева */
+  }
+
+  .episode {
+    font-size: clamp(18px, 5.5vw, 24px);
+  }
+
+  .time {
+    font-size: clamp(20px, 6vw, 26px);
+  }
+
+  .label {
+    font-size: clamp(15px, 4.2vw, 18px);
+  }
+}
+
+/* Очень маленькие экраны — чуть сжимаем */
+@media (max-width: 480px) {
+  .plot {
+    padding: 50px 12px;
+  }
+
+  .timeline::before {
+    left: 22px;
+  }
+
+  .event {
+    padding-left: 58px; /* подстраиваем под новое положение полоски */
+    margin: 40px 0;
+  }
+
+  .event::before {
+    left: 13px;
+    width: 16px;
+    height: 16px;
+  }
+
+  .time {
+    font-size: clamp(18px, 6.5vw, 24px);
+  }
+}
