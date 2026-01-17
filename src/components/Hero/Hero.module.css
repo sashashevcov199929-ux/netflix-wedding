@@ -1,4 +1,5 @@
 .hero {
+  position: relative;
   text-align: center;
   min-height: 100vh;
   display: flex;
@@ -8,7 +9,18 @@
   padding: 40px 20px;
   background-image:
     linear-gradient(to top, rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)),
-    url("./bg.jpg");
+    radial-gradient(
+      circle at 50% 15%,
+      rgba(229, 9, 20, 0.07) 0%,
+      transparent 70%
+    ),
+    /* сверху */
+    radial-gradient(
+        circle at 50% 85%,
+        rgba(229, 9, 20, 0.08) 0%,
+        transparent 70%
+      ),
+    /* снизу */ url("./bg.jpg");
   background-size: cover;
   background-position: center;
 }
